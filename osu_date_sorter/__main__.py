@@ -14,7 +14,7 @@ def main():
     osu_db_path = os.path.join(args.osu_dir, "osu!.db")
     assert os.path.isfile(osu_db_path), "osu!.db not found. Did you supply the right directory?"
     osu_song_dir = os.path.join(args.osu_dir, "Songs")
-    assert os.path.isdir(osu_db_path), "Songs folder not found. Did you supply the right directory?"
+    assert os.path.isdir(osu_song_dir), "Songs folder not found. Did you supply the right directory?"
 
     print("If you haven't made backups, press CTRL+C to terminate the program. Also, make sure osu! is closed. I do not claim responsibility for any corruptions that may occur.")
     print("Processing will automatically start in 10 seconds...")
