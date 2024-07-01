@@ -19,4 +19,4 @@ python osu_date_sorter "E:\osu!"
 ```
 
 Make sure you close osu! before running this command or else osu! will overwrite it.
-I would also recommend backing up your osu!.db before doing this. I am not responsible for any database corruption or data loss you may experience.
+I would also recommend backing up your `osu!.db` before doing this. I am not responsible for any database corruption or data loss you may experience.
