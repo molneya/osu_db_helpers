@@ -15,7 +15,7 @@ python osu_date_sorter --help
 To make the program update your stuff, you need to supply your osu! directory, for example:
 
 ```bash
-python osu_date_sorter E:\osu!
+python osu_date_sorter "E:\osu!"
 ```
 
 Make sure you close osu! before running this command or else osu! will overwrite it.

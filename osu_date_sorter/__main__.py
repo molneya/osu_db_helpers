@@ -7,7 +7,7 @@ import time
 from sorter import load_data, update_db_last_modified, update_file_last_modified
 
 def main():
-    parser = argparse.ArgumentParser(prog="osu_date_sorter", description="Overwrites last_modified in osu!.db to allow sorting by date ranked")
+    parser = argparse.ArgumentParser(prog="osu_date_sorter", description="Updates your osu!.db and Songs directory to allow sorting by Ranked Date using the Date Added sort in game.")
     parser.add_argument("osu_dir", help="your base osu! directory", type=pathlib.Path)
     args = parser.parse_args()
 
