@@ -4,12 +4,14 @@ import gzip
 import os
 import pathlib
 import time
-from sorter import load_data, update_db_last_modified, update_file_last_modified
+
+import sorter
+import stars
 
 def main():
-    parser = argparse.ArgumentParser(prog="osu_date_sorter", description="Updates your osu!.db and Songs directory to allow sorting by Ranked Date using the Date Added sort in game.")
+    parser = argparse.ArgumentParser(prog="osu_date_sorter", description="Useful functions to manage your osu!.db")
     parser.add_argument("osu_dir", help="your base osu! directory", type=pathlib.Path)
-    parser.add_argument("--update-dates", action="store_true", help="update dates to allow for sorting by Ranked Date")
+    parser.add_argument("--update-dates", action="store_true", help="update dates to allow for sorting by ranked date")
     parser.add_argument("--update-stars", action="store_true", help="update stars to latest version")
     args = parser.parse_args()
 
@@ -24,17 +26,20 @@ def main():
     time.sleep(10)
 
     if args.update_dates:
-        # Load beatmapset data
+        # Load ranked data
         with gzip.open("ranked_data.gz", 'rb') as f:
-            ranked_data = load_data(f)
+            ranked_data = sorter.load_data(f)
         # Update osu!.db entries
         with open(osu_db_path, 'rb+') as f:
-            update_db_last_modified(f, ranked_data)
+            sorter.update_db_last_modified(f, ranked_data)
         # Update file last modified entries
-        update_file_last_modified(osu_song_dir, ranked_data)
+        sorter.update_file_last_modified(osu_song_dir, ranked_data)
 
     if args.update_stars:
-        pass
+       # Load stars data
+        with gzip.open("stars_data.gz", 'rb') as f:
+            stars_data = stars.load_data(f)
+        print(stars_data[75])
 
 if __name__ == "__main__":
     exit(main())

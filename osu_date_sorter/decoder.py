@@ -8,6 +8,9 @@ def decode_byte(fp) -> int:
 def decode_int(fp) -> int:
     return struct.unpack('<I', fp.read(0x04))[0]
 
+def decode_float(fp) -> float:
+    return struct.unpack('<f', fp.read(0x04))[0]
+
 def decode_uleb128(fp) -> int:
     a = bytearray()
     while True:
