@@ -5,7 +5,7 @@ import os
 import pathlib
 import time
 
-import sorter
+import dates
 import stars
 
 def main():
@@ -28,12 +28,12 @@ def main():
     if args.update_dates:
         # Load ranked data
         with gzip.open("ranked_data.gz", 'rb') as f:
-            ranked_data = sorter.load_data(f)
+            ranked_data = dates.load_data(f)
         # Update osu!.db entries
         with open(osu_db_path, 'rb+') as f:
-            sorter.update_db_last_modified(f, ranked_data)
+            dates.update_db_last_modified(f, ranked_data)
         # Update file last modified entries
-        sorter.update_file_last_modified(osu_song_dir, ranked_data)
+        dates.update_file_last_modified(osu_song_dir, ranked_data)
 
     if args.update_stars:
        # Load stars data
