@@ -4,7 +4,7 @@ Updates your osu!.db and Songs directory to allow sorting by Ranked Date using t
 
 ## Usage
 
-To download and run the help command:
+To download and view command usage:
 
 ```bash
 git clone https://github.com/molneya/osu_date_sorter
