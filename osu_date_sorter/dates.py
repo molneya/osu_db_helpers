@@ -6,18 +6,18 @@ def load_data(fp):
     '''
     Loads ranked date data into a dictionary.
     '''
-    print(f"Loading ranked date data...")
-    last_modified_dict = {}
+    data = {}
+    print(f"[update-dates] Loading ranked date data...")
     beatmapset_count = decode_int(fp)
 
     for _ in range(beatmapset_count):
         beatmapset_id = decode_int(fp)
         last_modified = decode_int(fp)
-        last_modified_dict[beatmapset_id] = last_modified
+        data[beatmapset_id] = last_modified
 
-    return last_modified_dict
+    return data
 
-def update_db_last_modified(fp, last_modified_dict):
+def update_db_last_modified(fp, data):
     '''
     Updates the last_modified parameter of each beatmap in our osu!.db to a custom one.
     '''
@@ -28,9 +28,9 @@ def update_db_last_modified(fp, last_modified_dict):
     fp.seek(13, 1)
     # Seek past player_name
     seek_ulebstring(fp)
-    
+
     beatmap_count = decode_int(fp)
-    print(f"Processing {beatmap_count} beatmaps in osu!.db...")
+    print(f"[update-dates] Processing {beatmap_count} beatmaps in osu!.db...")
     total_leaderboards = 0
     total_updated = 0
 
@@ -80,27 +80,27 @@ def update_db_last_modified(fp, last_modified_dict):
         fp.seek(18, os.SEEK_CUR)
 
         # Ignore beatmapsets where we don't have an entry in our dict
-        if beatmapset_id not in last_modified_dict:
+        if beatmapset_id not in data:
             continue
 
         # Get the offset of the end of the beatmap to go back to it later
         end_offset = fp.tell()
         # Go to where our last_modified is and update the value to windows ticks
         fp.seek(last_modified_offset, os.SEEK_SET)
-        windows_ticks = (last_modified_dict[beatmapset_id] + 62135596800) * 10000000
+        windows_ticks = (data[beatmapset_id] + 62135596800) * 10000000
         encode_long(windows_ticks, fp)
         # Go back to the end of the beatmap to continue reading the file
         fp.seek(end_offset, os.SEEK_SET)
         total_updated += 1
 
-    print(f"Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets in osu!.db")
+    print(f"[update-dates] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets in osu!.db")
 
-def update_file_last_modified(dir, last_modified_dict):
+def update_file_last_modified(dir, data):
     '''
     Updates the access and modified times of each beatmap in our Songs folder to a custom one.
     '''
     beatmapsets = os.listdir(dir)
-    print(f"Processing {len(beatmapsets)} beatmapsets in Songs...")
+    print(f"[update-dates] Processing {len(beatmapsets)} beatmapsets in Songs...")
     total_updated = 0
 
     for beatmapset in beatmapsets:
@@ -111,7 +111,7 @@ def update_file_last_modified(dir, last_modified_dict):
             continue
 
         # Ignore beatmapsets where we don't have an entry in our dict
-        if beatmapset_id not in last_modified_dict:
+        if beatmapset_id not in data:
             continue
 
         beatmapset_path = os.path.join(dir, beatmapset)
@@ -123,10 +123,10 @@ def update_file_last_modified(dir, last_modified_dict):
 
             # Update last access and modified times of the beatmap
             beatmap_path = os.path.join(beatmapset_path, beatmap)
-            unix_time = last_modified_dict[beatmapset_id]
+            unix_time = data[beatmapset_id]
             os.utime(beatmap_path, (unix_time, unix_time))
 
             # Tally updated maps
             total_updated += 1
 
-    print(f"Updated {total_updated} beatmaps from ranked/approved/loved beatmapsets in Songs")
+    print(f"[update-dates] Updated {total_updated} beatmaps from ranked/approved/loved beatmapsets in Songs")

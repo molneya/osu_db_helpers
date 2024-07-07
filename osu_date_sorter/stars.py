@@ -7,7 +7,7 @@ def load_data(fp):
     Loads beatmap stars data into a dictionary.
     '''
     data = {}
-    print(f"Loading stars data...")
+    print(f"[update-stars] Loading stars data...")
     beatmap_count = decode_int(fp)
 
     for _ in range(beatmap_count):
@@ -40,7 +40,7 @@ def update_db_stars(fp, new_fp, data):
     fp.seek(0, os.SEEK_SET)
     new_fp.write(fp.read(current_offset))
 
-    print(f"Processing {beatmap_count} beatmaps in osu!.db...")
+    print(f"[update-stars] Processing {beatmap_count} beatmaps in osu!.db...")
     total_updated = 0
 
     for _ in range(beatmap_count):
@@ -97,4 +97,4 @@ def update_db_stars(fp, new_fp, data):
     # Write osu!.db footer
     new_fp.write(fp.read(4))
 
-    print(f"Updated {total_updated} beatmaps in osu!.db")
+    print(f"[update-stars] Updated {total_updated} beatmaps in osu!.db")
