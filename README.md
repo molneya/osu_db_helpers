@@ -1,4 +1,4 @@
-# osu! date sorter
+# osu! db helpers
 
 Useful functions to manage your osu!.db.
 
