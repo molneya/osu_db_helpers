@@ -27,19 +27,21 @@ def main():
 
     if args.update_dates:
         # Load ranked data
-        with gzip.open("ranked_data.gz", 'rb') as f:
-            ranked_data = dates.load_data(f)
+        with gzip.open("ranked_data.gz", 'rb') as fp:
+            ranked_data = dates.load_data(fp)
         # Update osu!.db entries
-        with open(osu_db_path, 'rb+') as f:
-            dates.update_db_last_modified(f, ranked_data)
+        with open(osu_db_path, 'rb+') as fp:
+            dates.update_db_last_modified(fp, ranked_data)
         # Update file last modified entries
         dates.update_file_last_modified(osu_song_dir, ranked_data)
 
     if args.update_stars:
-       # Load stars data
-        with gzip.open("stars_data.gz", 'rb') as f:
-            stars_data = stars.load_data(f)
-        print(stars_data[75])
+        # Load stars data
+        #with gzip.open("stars_data.gz", 'rb') as fp:
+            #stars_data = stars.load_data(fp)
+        with open(osu_db_path, 'rb') as fp:
+            with open(osu_db_path + "_new", 'wb') as fp_new:
+                stars.update_db_stars(fp, fp_new, {})
 
 if __name__ == "__main__":
     exit(main())
