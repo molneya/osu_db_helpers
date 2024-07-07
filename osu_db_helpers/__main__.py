@@ -9,7 +9,7 @@ import dates
 import stars
 
 def main():
-    parser = argparse.ArgumentParser(prog="osu_date_sorter", description="Useful functions to manage your osu!.db")
+    parser = argparse.ArgumentParser(prog="osu_db_helpers", description="Useful functions to manage your osu!.db")
     parser.add_argument("osu_dir", help="your base osu! directory", type=pathlib.Path)
     parser.add_argument("--update-dates", action="store_true", help="update dates to allow for sorting by ranked date")
     parser.add_argument("--update-stars", action="store_true", help="update stars to latest version")
