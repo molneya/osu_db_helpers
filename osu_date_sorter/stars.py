@@ -41,15 +41,21 @@ def update_db_stars(fp, new_fp, data):
     new_fp.write(fp.read(current_offset))
 
     print(f"[update-stars] Processing {beatmap_count} beatmaps in osu!.db...")
+    total_leaderboards = 0
     total_updated = 0
 
     for _ in range(beatmap_count):
-
         beatmap_start_offset = fp.tell()
 
         for _ in range(9):
             seek_ulebstring(fp)
-        fp.seek(39, os.SEEK_CUR)
+
+        # Tally maps with leaderboards
+        status = decode_byte(fp)
+        if status in (4, 5, 7):
+            total_leaderboards += 1
+
+        fp.seek(38, os.SEEK_CUR)
 
         stars_start_offset = fp.tell()
 
@@ -97,4 +103,4 @@ def update_db_stars(fp, new_fp, data):
     # Write osu!.db footer
     new_fp.write(fp.read(4))
 
-    print(f"[update-stars] Updated {total_updated} beatmaps in osu!.db")
+    print(f"[update-stars] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets in osu!.db"")
