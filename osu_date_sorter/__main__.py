@@ -23,7 +23,7 @@ def main():
 
     print("If you haven't made backups, press CTRL+C to terminate the program. Also, make sure osu! is closed. I do not claim responsibility for any corruptions that may occur.")
     print("Processing will automatically start in 10 seconds...")
-    time.sleep(10)
+    #time.sleep(10)
 
     if args.update_dates:
         # Load ranked data
@@ -37,11 +37,12 @@ def main():
 
     if args.update_stars:
         # Load stars data
-        #with gzip.open("stars_data.gz", 'rb') as fp:
-            #stars_data = stars.load_data(fp)
+        with gzip.open("stars_data.gz", 'rb') as fp:
+            stars_data = stars.load_data(fp)
+        # Update osu!.db entries
         with open(osu_db_path, 'rb') as fp:
             with open(osu_db_path + "_new", 'wb') as fp_new:
-                stars.update_db_stars(fp, fp_new, {})
+                stars.update_db_stars(fp, fp_new, stars_data)
 
 if __name__ == "__main__":
     exit(main())

@@ -90,6 +90,34 @@ def update_db_stars(fp, new_fp, data):
 
         # Write new stars info if we have it
         if beatmap_id in data:
+
+            for mode in range(4):
+                mode_stars_data = data[beatmap_id][mode]
+                stars_pairs_count = len(mode_stars_data)
+
+                # Add EZ and HR to mania mode
+                if mode == 3:
+                    stars_pairs_count *= 3
+
+                encode_int(stars_pairs_count, new_fp)
+
+                for mods, stars in mode_stars_data.items():
+                    new_fp.write(b'\x08')
+                    encode_int(mods, new_fp)
+                    new_fp.write(b'\x0D')
+                    encode_double(stars, new_fp)
+
+                    # Add EZ and HR to mania mode
+                    if mode == 3:
+                        new_fp.write(b'\x08')
+                        encode_int(mods + 2, new_fp)
+                        new_fp.write(b'\x0D')
+                        encode_double(stars, new_fp)
+                        new_fp.write(b'\x08')
+                        encode_int(mods + 16, new_fp)
+                        new_fp.write(b'\x0D')
+                        encode_double(stars, new_fp)
+
             total_updated += 1
 
         # Else copy old stars data
@@ -103,4 +131,4 @@ def update_db_stars(fp, new_fp, data):
     # Write osu!.db footer
     new_fp.write(fp.read(4))
 
-    print(f"[update-stars] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets in osu!.db"")
+    print(f"[update-stars] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets in osu!.db")
