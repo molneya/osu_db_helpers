@@ -25,8 +25,8 @@ def update_stars():
     # Update osu!.db entries
     new_osu_db_path = osu_db_path + "_new"
     with open(osu_db_path, 'rb') as fp:
-        with open(new_osu_db_path, 'wb') as fp_new:
-            stars.update_db_stars(fp, fp_new, stars_data)
+        with open(new_osu_db_path, 'wb') as new_fp:
+            stars.update_db_stars(fp, new_fp, stars_data)
     # Clean up files
     os.remove(osu_db_path)
     os.rename(new_osu_db_path, osu_db_path)

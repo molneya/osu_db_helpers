@@ -22,7 +22,8 @@ def update_db_last_modified(fp, data):
     Updates the last_modified parameter of each beatmap in our osu!.db to a custom one.
     '''
     version = decode_int(fp)
-    assert version >= 20191106, f"Your osu!.db version ({version}) is too old! Please update osu! before running this program again."
+    if version < 20191106:
+        raise ValueError(f"Your osu!.db version ({version}) is too old! Please update osu! before running this program again.")
 
     fp.seek(13, os.SEEK_CUR)
     seek_ulebstring(fp)

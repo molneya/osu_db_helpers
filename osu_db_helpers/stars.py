@@ -29,7 +29,8 @@ def update_db_stars(fp, new_fp, data):
     Updates star ratings of each beatmap in our osu!.db, copying data to a new osu!.db.
     '''
     version = decode_int(fp)
-    assert version >= 20191106, f"Your osu!.db version ({version}) is too old! Please update osu! before running this program again."
+    if version < 20191106:
+        raise ValueError(f"Your osu!.db version ({version}) is too old! Please update osu! before running this program again.")
 
     fp.seek(13, os.SEEK_CUR)
     seek_ulebstring(fp)
@@ -120,7 +121,7 @@ def update_db_stars(fp, new_fp, data):
 
             total_updated += 1
 
-        # Else copy old stars data
+        # Otherwise copy old stars data
         else:
             new_fp.write(fp.read(stars_end_offset - stars_start_offset))
 
