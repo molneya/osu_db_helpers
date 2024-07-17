@@ -51,16 +51,13 @@ def update_db_stars(fp, new_fp, data):
         for _ in range(9):
             seek_ulebstring(fp)
 
-        # Tally maps with leaderboards
-        status = decode_byte(fp)
-        if status in (4, 5, 7):
+        if decode_byte(fp) in (4, 5, 7):
             total_leaderboards += 1
 
         fp.seek(38, os.SEEK_CUR)
 
         stars_start_offset = fp.tell()
 
-        # Seek past star rating int/double pairs for all modes
         for _ in range(4):
             stars_pairs_count = decode_int(fp)
             fp.seek(14 * stars_pairs_count, os.SEEK_CUR)
@@ -68,10 +65,8 @@ def update_db_stars(fp, new_fp, data):
         stars_end_offset = fp.tell()
 
         fp.seek(12, os.SEEK_CUR)
-        timing_points_count = decode_int(fp)
-        fp.seek(17 * timing_points_count, os.SEEK_CUR)
+        fp.seek(17 * decode_int(fp), os.SEEK_CUR)
 
-        # Get beatmap_id to use later
         beatmap_id = decode_int(fp)
 
         fp.seek(19, os.SEEK_CUR)
@@ -121,7 +116,7 @@ def update_db_stars(fp, new_fp, data):
 
             total_updated += 1
 
-        # Otherwise copy old stars data
+        # Otherwise, copy old stars data
         else:
             new_fp.write(fp.read(stars_end_offset - stars_start_offset))
 

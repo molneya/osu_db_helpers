@@ -37,14 +37,11 @@ def update_db_last_modified(fp, data):
         for _ in range(9):
             seek_ulebstring(fp)
 
-        # Tally maps with leaderboards
-        status = decode_byte(fp)
-        if status in (4, 5, 7):
+        if decode_byte(fp) in (4, 5, 7):
             total_leaderboards += 1
 
         fp.seek(6, os.SEEK_CUR)
 
-        # Get the offset of last_modified to modify it later
         last_modified_offset = fp.tell()
 
         fp.seek(32, os.SEEK_CUR)
@@ -52,11 +49,9 @@ def update_db_last_modified(fp, data):
             stars_pairs_count = decode_int(fp)
             fp.seek(14 * stars_pairs_count, os.SEEK_CUR)
         fp.seek(12, os.SEEK_CUR)
-        timing_points_count = decode_int(fp)
-        fp.seek(17 * timing_points_count, os.SEEK_CUR)
+        fp.seek(17 * decode_int(fp), os.SEEK_CUR)
         fp.seek(4, os.SEEK_CUR)
 
-        # Get beatmapset_id for use later
         beatmapset_id = decode_int(fp)
 
         fp.seek(15, os.SEEK_CUR)
@@ -68,7 +63,7 @@ def update_db_last_modified(fp, data):
         seek_ulebstring(fp)
         fp.seek(18, os.SEEK_CUR)
 
-        # Ignore beatmapsets where we don't have an entry in our dict
+        # Ignore beatmapsets where we don't have data for
         if beatmapset_id not in data:
             continue
 
