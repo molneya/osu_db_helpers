@@ -58,7 +58,7 @@ def update_stars(fp, new_fp, stars_data):
     fp.seek(0, os.SEEK_SET)
     new_fp.write(fp.read(current_offset))
 
-    print(f"[update-stars] Processing {beatmap_count} beatmaps in osu!.db...")
+    print(f"[update-stars] Processing {beatmap_count} beatmaps...")
     total_leaderboards = 0
     total_updated = 0
 

@@ -29,7 +29,7 @@ def load_data(fp):
 
 def update_last_modified(fp, ranked_data, osu_songs_dir):
     '''
-    Updates the last_modified parameter of each beatmap in our osu!.db to a custom one.
+    Updates the last_modified parameter of each beatmap in our osu!.db and Songs folder to the date it was ranked.
     '''
     version = decode_int(fp)
     if version < 20191106:
@@ -39,7 +39,7 @@ def update_last_modified(fp, ranked_data, osu_songs_dir):
     seek_ulebstring(fp)
     beatmap_count = decode_int(fp)
 
-    print(f"[update-dates] Processing {beatmap_count} beatmaps in osu!.db...")
+    print(f"[update-dates] Processing {beatmap_count} beatmaps...")
     total_leaderboards = 0
     total_updated = 0
 
