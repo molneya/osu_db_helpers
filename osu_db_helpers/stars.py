@@ -54,9 +54,9 @@ def update_stars(fp, new_fp, stars_data):
     beatmap_count = decode_int(fp)
 
     # Add osu!.db header to new file
-    current_offset = fp.tell()
+    header_end_offset = fp.tell()
     fp.seek(0, os.SEEK_SET)
-    new_fp.write(fp.read(current_offset))
+    new_fp.write(fp.read(header_end_offset))
 
     print(f"[update-stars] Processing {beatmap_count} beatmaps...")
     total_leaderboards = 0
