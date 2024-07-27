@@ -97,11 +97,11 @@ def update_stars(fp, new_fp, stars_data):
 
         beatmap_end_offset = fp.tell()
 
-        # Write stuff before stars into new file
+        # Write stuff before stars to new file
         fp.seek(beatmap_start_offset, os.SEEK_SET)
         new_fp.write(fp.read(stars_start_offset - beatmap_start_offset))
 
-        # Write new stars info if we have it
+        # Write new stars info to new file if we have it
         if beatmap_id in stars_data:
 
             for mode in range(4):
@@ -133,15 +133,15 @@ def update_stars(fp, new_fp, stars_data):
 
             total_updated += 1
 
-        # Otherwise, copy old stars data
+        # Otherwise, copy old stars data to new file
         else:
             new_fp.write(fp.read(stars_end_offset - stars_start_offset))
 
-        # Write stuff after stars into new file
+        # Write stuff after stars to new file
         fp.seek(stars_end_offset, os.SEEK_SET)
         new_fp.write(fp.read(beatmap_end_offset - stars_end_offset))
 
-    # Write osu!.db footer
+    # Write osu!.db footer to new file
     new_fp.write(fp.read(4))
 
     print(f"[update-stars] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets")
