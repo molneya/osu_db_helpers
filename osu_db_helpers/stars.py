@@ -23,13 +23,13 @@ def load_data(fp):
     '''
     Loads beatmap stars data into a dictionary.
     '''
-    data = {}
+    stars_data = {}
     print(f"[update-stars] Loading stars data...")
     beatmap_count = decode_int(fp)
 
     for _ in range(beatmap_count):
         beatmap_id = decode_int(fp)
-        data[beatmap_id] = [{}, {}, {}, {}]
+        stars_data[beatmap_id] = [{}, {}, {}, {}]
 
         for i in range(4):
             entries_count = decode_byte(fp)
@@ -37,11 +37,11 @@ def load_data(fp):
             for _ in range(entries_count):
                 mods = decode_int(fp)
                 stars = decode_float(fp)
-                data[beatmap_id][i][mods] = stars
+                stars_data[beatmap_id][i][mods] = stars
 
-    return data
+    return stars_data
 
-def update_stars(fp, new_fp, data):
+def update_stars(fp, new_fp, stars_data):
     '''
     Updates star ratings of each beatmap in our osu!.db, copying data to a new osu!.db.
     '''
@@ -102,10 +102,10 @@ def update_stars(fp, new_fp, data):
         new_fp.write(fp.read(stars_start_offset - beatmap_start_offset))
 
         # Write new stars info if we have it
-        if beatmap_id in data:
+        if beatmap_id in stars_data:
 
             for mode in range(4):
-                mode_stars_data = data[beatmap_id][mode]
+                mode_stars_data = stars_data[beatmap_id][mode]
                 stars_pairs_count = len(mode_stars_data)
 
                 # Add EZ and HR to mania mode
@@ -144,4 +144,4 @@ def update_stars(fp, new_fp, data):
     # Write osu!.db footer
     new_fp.write(fp.read(4))
 
-    print(f"[update-stars] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets in osu!.db")
+    print(f"[update-stars] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets")

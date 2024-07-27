@@ -23,6 +23,13 @@ def decode_uleb128(fp) -> int:
         r = r + ((e & 0x7f) << (i * 7))
     return r
 
+def decode_ulebstring(fp) -> str:
+    if decode_byte(fp) == 0:
+        return ""
+    length = decode_uleb128(fp)
+    data = struct.unpack(f'<{length}s', fp.read(length))
+    return data[0].decode('utf-8')
+
 def seek_ulebstring(fp) -> None:
     if decode_byte(fp) == 0:
         return
