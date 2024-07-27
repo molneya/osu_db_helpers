@@ -1,6 +1,23 @@
 
-import os
+import os, gzip
 from decoder import *
+
+def run(osu_db_path):
+    '''
+    Runs complete stars update process.
+    '''
+    new_osu_db_path = osu_db_path + "_new"
+
+    with gzip.open("stars_data.gz", 'rb') as fp:
+        stars_data = load_data(fp)
+
+    with open(osu_db_path, 'rb') as fp:
+        with open(new_osu_db_path, 'wb') as new_fp:
+            update_stars(fp, new_fp, stars_data)
+
+    # Cleanup files
+    os.remove(osu_db_path)
+    os.rename(new_osu_db_path, osu_db_path)
 
 def load_data(fp):
     '''
@@ -24,7 +41,7 @@ def load_data(fp):
 
     return data
 
-def update_db_stars(fp, new_fp, data):
+def update_stars(fp, new_fp, data):
     '''
     Updates star ratings of each beatmap in our osu!.db, copying data to a new osu!.db.
     '''

@@ -1,6 +1,19 @@
 
-import os
+import os, gzip
 from decoder import *
+
+def run(osu_db_path, osu_songs_dir):
+    '''
+    Runs complete dates update process.
+    '''
+    with gzip.open("ranked_data.gz", 'rb') as fp:
+        ranked_data = load_data(fp)
+
+    with open(osu_db_path, 'rb+') as fp:
+        update_last_modified(fp, ranked_data)
+
+    # TODO: move logic to inside update_last_modified
+    update_file_last_modified(osu_songs_dir, ranked_data)
 
 def load_data(fp):
     '''
@@ -17,7 +30,7 @@ def load_data(fp):
 
     return data
 
-def update_db_last_modified(fp, data):
+def update_last_modified(fp, data):
     '''
     Updates the last_modified parameter of each beatmap in our osu!.db to a custom one.
     '''

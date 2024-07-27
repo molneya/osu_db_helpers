@@ -1,29 +1,6 @@
 
-import argparse
-import gzip
-import os
-import pathlib
-import time
-
-import dates
-import stars
-
-def update_dates(osu_db_path, osu_songs_dir):
-    with gzip.open("ranked_data.gz", 'rb') as fp:
-        ranked_data = dates.load_data(fp)
-    with open(osu_db_path, 'rb+') as fp:
-        dates.update_db_last_modified(fp, ranked_data)
-    dates.update_file_last_modified(osu_songs_dir, ranked_data)
-
-def update_stars(osu_db_path):
-    with gzip.open("stars_data.gz", 'rb') as fp:
-        stars_data = stars.load_data(fp)
-    new_osu_db_path = osu_db_path + "_new"
-    with open(osu_db_path, 'rb') as fp:
-        with open(new_osu_db_path, 'wb') as new_fp:
-            stars.update_db_stars(fp, new_fp, stars_data)
-    os.remove(osu_db_path)
-    os.rename(new_osu_db_path, osu_db_path)
+import argparse, os, pathlib, time
+import dates, stars
 
 def main():
     parser = argparse.ArgumentParser(prog="osu_db_helpers", description="Useful functions to manage your osu!.db")
@@ -47,10 +24,10 @@ def main():
     time.sleep(10)
 
     if args.update_dates:
-        update_dates(osu_db_path, osu_songs_dir)
+        dates.run(osu_db_path, osu_songs_dir)
 
     if args.update_stars:
-        update_stars(osu_db_path)
+        stars.run(osu_db_path)
 
 if __name__ == "__main__":
     exit(main())
