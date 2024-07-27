@@ -98,4 +98,4 @@ def update_last_modified(fp, ranked_data, osu_songs_dir):
 
         total_updated += 1
 
-    print(f"[update-dates] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets")
+    print(f"[update-dates] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmaps in database")

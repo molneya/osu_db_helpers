@@ -144,4 +144,4 @@ def update_stars(fp, new_fp, stars_data):
     # Write osu!.db footer to new file
     new_fp.write(fp.read(4))
 
-    print(f"[update-stars] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmapsets")
+    print(f"[update-stars] Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmaps in database")
