@@ -1,5 +1,5 @@
 
-import os, gzip
+import os, gzip, shutil
 from decoder import *
 
 def run(osu_db_path, osu_songs_dir, purge_modes):
