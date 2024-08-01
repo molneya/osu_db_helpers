@@ -64,28 +64,19 @@ def update_stars(fp, new_fp, stars_data):
 
     for _ in range(beatmap_count):
         beatmap_start_offset = fp.tell()
-
         for _ in range(9):
             seek_ulebstring(fp)
-
         if decode_byte(fp) in (4, 5, 7):
             total_leaderboards += 1
-
         fp.seek(38, os.SEEK_CUR)
-
         stars_start_offset = fp.tell()
-
         for _ in range(4):
             stars_pairs_count = decode_int(fp)
             fp.seek(14 * stars_pairs_count, os.SEEK_CUR)
-
         stars_end_offset = fp.tell()
-
         fp.seek(12, os.SEEK_CUR)
         fp.seek(17 * decode_int(fp), os.SEEK_CUR)
-
         beatmap_id = decode_int(fp)
-
         fp.seek(19, os.SEEK_CUR)
         for _ in range(2):
             seek_ulebstring(fp)
@@ -94,7 +85,6 @@ def update_stars(fp, new_fp, stars_data):
         fp.seek(10, os.SEEK_CUR)
         seek_ulebstring(fp)
         fp.seek(18, os.SEEK_CUR)
-
         beatmap_end_offset = fp.tell()
 
         # Write stuff before stars to new file

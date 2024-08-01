@@ -46,16 +46,11 @@ def update_last_modified(fp, ranked_data, osu_songs_dir):
     for _ in range(beatmap_count):
         for _ in range(8):
             seek_ulebstring(fp)
-
         osu_file = decode_ulebstring(fp)
-
         if decode_byte(fp) in (4, 5, 7):
             total_leaderboards += 1
-
         fp.seek(6, os.SEEK_CUR)
-
         last_modified_offset = fp.tell()
-
         fp.seek(32, os.SEEK_CUR)
         for _ in range(4):
             stars_pairs_count = decode_int(fp)
@@ -63,18 +58,14 @@ def update_last_modified(fp, ranked_data, osu_songs_dir):
         fp.seek(12, os.SEEK_CUR)
         fp.seek(17 * decode_int(fp), os.SEEK_CUR)
         fp.seek(4, os.SEEK_CUR)
-
         beatmapset_id = decode_int(fp)
-
         fp.seek(15, os.SEEK_CUR)
         for _ in range(2):
             seek_ulebstring(fp)
         fp.seek(2, os.SEEK_CUR)
         seek_ulebstring(fp)
         fp.seek(10, os.SEEK_CUR)
-
         osu_folder = decode_ulebstring(fp)
-
         fp.seek(18, os.SEEK_CUR)
 
         # Ignore beatmapsets where we don't have data for
