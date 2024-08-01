@@ -100,7 +100,6 @@ def purge_folders(osu_songs_dir):
 
         # Otherwise, delete this folder
         shutil.rmtree(folder_path)
-        print(folder_path)
         total_purged += 1
 
     print(f"[purge-beatmaps] Purged {total_purged}/{beatmapset_count} beatmapsets without difficulties")
