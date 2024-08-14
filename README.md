@@ -6,7 +6,7 @@ Useful functions to manage your osu!.db.
 
 ### Executable
 
-You can download the executable from the [https://github.com/molneya/osu_db_helpers/releases](releases) page.
+You can download the executable from the [releases](https://github.com/molneya/osu_db_helpers/releases) page.
 
 From there, run it, add your osu! directory, select your options, then click start.
 
