@@ -14,7 +14,7 @@ def main():
     osu_songs_dir = os.path.join(args.osu_dir, "Songs")
 
     if not (args.update_dates or args.update_stars or args.purge_mode):
-        raise ValueError("No options selected. Run command again with --update-dates and/or --update-stars to complete an action.")
+        raise ValueError("No options selected. Run command again with a flag to complete an action.")
     if not os.path.isfile(osu_db_path):
         raise ValueError("osu!.db not found. Did you supply the right directory?")
     if not os.path.isdir(osu_songs_dir):

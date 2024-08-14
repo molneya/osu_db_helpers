@@ -6,7 +6,9 @@ def run(osu_db_path, osu_songs_dir):
     '''
     Runs complete dates update process.
     '''
-    with gzip.open("ranked_data.gz", 'rb') as fp:
+    data = os.path.join(os.path.dirname(__file__), "ranked_data.gz")
+
+    with gzip.open(data, 'rb') as fp:
         ranked_data = load_data(fp)
 
     with open(osu_db_path, 'rb+') as fp:

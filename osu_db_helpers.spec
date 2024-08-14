@@ -1,8 +1,8 @@
 # -*- mode: python ; coding: utf-8 -*-
 
 added_files = [
-    ('ranked_data.gz', '.'),
-    ('stars_data.gz', '.'),
+    ('osu_db_helpers\\ranked_data.gz', '.'),
+    ('osu_db_helpers\\stars_data.gz', '.'),
     ('icon.ico', '.'),
 ]
 

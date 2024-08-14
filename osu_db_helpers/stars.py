@@ -7,8 +7,9 @@ def run(osu_db_path):
     Runs complete stars update process.
     '''
     new_osu_db_path = osu_db_path + "_new"
+    data = os.path.join(os.path.dirname(__file__), "stars_data.gz")
 
-    with gzip.open("stars_data.gz", 'rb') as fp:
+    with gzip.open(data, 'rb') as fp:
         stars_data = load_data(fp)
 
     with open(osu_db_path, 'rb') as fp:
