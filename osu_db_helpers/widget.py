@@ -17,6 +17,7 @@ class OsuDbHelpersWidget(QMainWindow):
         self.widget = QWidget(self)
         self.setCentralWidget(self.widget)
         self.layout = QVBoxLayout(self.widget)
+        self.log = ""
 
         self.directoryLineEdit = QLineEdit(placeholderText="osu! Directory")
         self.directoryPushButton = QPushButton("Change")
@@ -37,13 +38,18 @@ class OsuDbHelpersWidget(QMainWindow):
 
         self.message.connect(self.showMessageBox)
         self.status.connect(self.updateStatus)
-        self.status.emit("Ready!")
+        self.statusBar().showMessage("Ready!")
+
+        self.menu = self.menuBar().addMenu("Menu")
+        self.menu.addAction("About", lambda: self.message.emit(QMessageBox.Information, "About", "<p><a href=https://github.com/molneya/osu_db_helpers>View on Github</a><br>Ranked data up to date as of 2024-07-01<br>Stars data up to date as of 2024-06-05</p>"))
+        self.menu.addAction("Log", lambda: self.message.emit(QMessageBox.Information, "Log", self.log))
 
     @Slot(str)
     def updateStatus(self, message):
         '''
         Updates the status bar with message.
         '''
+        self.log += message
         self.statusBar().showMessage(message)
 
     @Slot(QMessageBox.Icon, str, str)
@@ -128,7 +134,9 @@ class OsuDbHelpersWidget(QMainWindow):
         '''
         The function that runs the actual osu! db functions.
         '''
-        self.startPushButton.setEnabled(False)
+        self.widget.setEnabled(False)
+        self.menu.setEnabled(False)
+
         capturing = Capturing()
         capturing.on_readline(lambda status: self.status.emit(status))
         capturing.start()
@@ -151,4 +159,5 @@ class OsuDbHelpersWidget(QMainWindow):
 
         finally:
             capturing.stop()
-            self.startPushButton.setEnabled(True)
+            self.widget.setEnabled(True)
+            self.menu.setEnabled(True)
