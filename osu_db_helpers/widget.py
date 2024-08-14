@@ -12,7 +12,7 @@ class OsuDbHelpersWidget(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("osu! db helpers gui")
+        self.setWindowTitle("osu! db helpers v2024.08.14")
         self.resize(500, 240)
         self.widget = QWidget(self)
         self.setCentralWidget(self.widget)

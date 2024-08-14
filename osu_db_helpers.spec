@@ -3,13 +3,14 @@
 added_files = [
     ('ranked_data.gz', '.'),
     ('stars_data.gz', '.'),
+    ('icon.ico', '.'),
 ]
 
 a = Analysis(
     ['osu_db_helpers\\gui.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=added_files,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
@@ -39,4 +40,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+    icon='icon.ico',
 )
