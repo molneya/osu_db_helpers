@@ -4,7 +4,15 @@ Useful functions to manage your osu!.db.
 
 ## Usage
 
-To download and view command usage:
+### Executable
+
+You can download the executable from the [https://github.com/molneya/osu_db_helpers/releases](releases) page.
+
+From there, run it, add your osu! directory, select your options, then click start.
+
+### Command line
+
+To download and view command line usage:
 
 ```bash
 git clone https://github.com/molneya/osu_db_helpers
@@ -18,10 +26,10 @@ This program comes with the following flags:
 - `--update-stars` updates star ratings of all beatmaps to the latest version.
 - `--purge-mode MODE` deletes all beatmaps from a specified mode.
 
-For example, if you want to update all star ratings whilst removing all catch and mania beatmaps, you can run the following command:
+For example, if you want to update all star ratings whilst removing all taiko/catch/mania beatmaps, you can run the following command:
 
 ```bash
-python osu_db_helpers "E:\osu!" --update-stars --purge-mode 2 --purge-mode 3
+python osu_db_helpers "E:\osu!" --update-stars --purge-mode 1 --purge-mode 2 --purge-mode 3
 ```
 
 ## Warning
