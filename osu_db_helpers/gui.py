@@ -1,5 +1,5 @@
 
-import sys
+import os, sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QIcon
 from widget import OsuDbHelpersWidget
