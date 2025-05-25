@@ -33,10 +33,9 @@ def load():
     Loads ranked date data from file.
     '''
     ranked_data = {}
-    base_path = Path(__file__).parent
 
     # Try loading ranked_data.csv in case anyone decides to use their own (up-to-date) data
-    data_path = base_path / "ranked_data.csv"
+    data_path = Path("ranked_data.csv")
 
     if data_path.is_file():
         print("Loading data from ranked_data.csv")
@@ -49,7 +48,7 @@ def load():
         return ranked_data
 
     # Otherwise use my compressed data
-    data_path = base_path / "ranked_data.gz"
+    data_path = Path(__file__).parent / "ranked_data.gz"
 
     with gzip.open(data_path, 'rb') as fp:
         for line in fp:
@@ -122,4 +121,4 @@ def update(fp, osu_songs_path, ranked_data):
     print(f"Updated {total_updated}/{total_leaderboards} beatmaps from ranked/approved/loved beatmaps in database")
 
 if __name__ == "__main__":
-    exit(main())
+    main()
