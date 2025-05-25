@@ -5,7 +5,6 @@ Orders beatmaps by ranked date using the date added sort option.
 ## Usage
 
 You can download the executable from the [releases](https://github.com/molneya/osu_db_helpers/releases) page.
-
 Run it from the command line with your osu! folder as an argument, or drag your osu! folder on top of the executable.
 
 ## Warning
@@ -15,6 +14,5 @@ I would also recommend backing up your `osu!.db` before doing this. I am not res
 
 ## Data
 
-Rankeed data is up to date as of 2025-05-06.
-
+Ranked data is up to date as of 2025-05-06. 
 If you require more recent data, create your own `ranked_data.csv` in the format `beatmapset_id,timestamp`. The program will read it automatically.
