@@ -1,6 +1,6 @@
-# osu! db helpers
+# osu! date added modifier
 
-Useful functions to manage your osu!.db.
+Orders beatmaps by ranked date using the date added sort option.
 
 ## Usage
 
